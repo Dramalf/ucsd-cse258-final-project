@@ -16,5 +16,9 @@ def loadRawData(name:str):
         dataset_path = config.get("DATASET_PATH", None)   
         data=pd.read_csv(dataset_path+'/'+name+'videos.csv')
         return data
+def loadCleanedData(name:str):
+    '''clean raw data'''
+    rawData=loadRawData(name)
+    
 if __name__ == "__main__":
     loadRawData('US')
