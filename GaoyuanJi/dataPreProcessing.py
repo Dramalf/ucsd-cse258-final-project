@@ -3,10 +3,12 @@ import json
 import pandas as pd
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
-import nltk
+from nltk.corpus import stopwords
+from collections import Counter
 import seaborn as sns
 import scipy.stats as stats
 import numpy as np  
+import re
 def downloadDataset():
     '''download dataset to the default path (not '/dataset')'''
     dataset_path = kagglehub.dataset_download("datasnaek/youtube-new")
@@ -61,7 +63,38 @@ def numberDistribution(name:str):
         plt.title('Histogram with KDE'+' : '+column)
         fig.savefig('dataAnalyse/'+name+column+'Distrbution.png')
     
+def wordFrequency(name:str):
+    """
+    Word frequency of string type fields in data
+
+    Save word cloud as "CountryFieldWordCloud.png" in folder "/dataAnalyse" e.g. "USchannel_titleWordCloud.png"
+
+    Save most 1000 common words for each column as "CountryFieldMostCommon1000.csv" in folder "/dataAnalyse" e.g. "UStagsMostCommon1000.csv"
+    """
+    data=loadCleanedData(name)
+    data.drop(labels=['video_id','trending_date','thumbnail_link','publish_time'],axis=1,inplace=True)
+    text=data.select_dtypes(include=['object'])
+    
+    stop_words = set(stopwords.words('english'))
+    for column in text:
+        allText=''.join(text[column])
+        allText=re.sub(r'http[s]?://\S+', '', allText)
+        allText = re.sub(r'[^\w\s]', '', allText)
+        allText = allText.lower()
+        allText = ' '.join([word for word in allText.split() if word not in stop_words])
+        allWords = allText.split()
+        wordCounts=Counter(allWords)
+        mostCommon=wordCounts.most_common(1000)
+        wordcloud = WordCloud(width=800, height=400, background_color='white').generate_from_frequencies(wordCounts)
+        plt.figure(figsize=(10, 5))
+        plt.imshow(wordcloud, interpolation='bilinear')
+        plt.title('Word Cloud in field : '+column)
+        plt.axis('off')
+        img=wordcloud.to_image()
+        img.save('dataAnalyse/'+name+column+'WordCloud.png')
+        pd.DataFrame(mostCommon).to_csv('dataAnalyse/'+name+column+'MostCommon1000.csv')
 if __name__ == "__main__":
-    numberDistribution('US')
-    numberDistribution('CA')
-    numberDistribution('GB')
+    wordFrequency('US')
+    wordFrequency('CA')
+    wordFrequency('GB')
+    
