@@ -93,8 +93,8 @@ def wordFrequency(name:str):
         img=wordcloud.to_image()
         img.save('dataAnalyse/'+name+column+'WordCloud.png')
         pd.DataFrame(mostCommon).to_csv('dataAnalyse/'+name+column+'MostCommon1000.csv')
+def dataLoader(name:str,column:str):
+    return loadCleanedData(name)[column]
 if __name__ == "__main__":
-    wordFrequency('US')
-    wordFrequency('CA')
-    wordFrequency('GB')
+    print(dataLoader('US','views').to_numpy())
     
