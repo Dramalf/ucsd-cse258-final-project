@@ -6,6 +6,7 @@ import torch
 import numpy as np
 import math
 from sklearn.model_selection import train_test_split
+'''
 views=dataPreProcessing.dataLoader('US','views').to_list()
 likes=dataPreProcessing.dataLoader('US','likes').to_list()
 feature=[]
@@ -53,11 +54,22 @@ print('SIGNLE FEATURE : DISLIKES ',eval.evaluate_model(YTest,prediction,'regress
 documents=dataPreProcessing.dataLoader('US','tags')
 prediction,Ytest=models.tfidfRegression(documents,viewsLog, 20000)
 print('TFIDF : TAGS ',eval.evaluate_model(Ytest,prediction,'regression',['mse','mae','r2']))
+prediction,Ytest=models.tfidfRegression(documents,viewsLog, 20000,SVD=True)
+print('TFIDF-SVD : TAGS ',eval.evaluate_model(Ytest,prediction,'regression',['mse','mae','r2']))
 ##################################################################
 documents=dataPreProcessing.dataLoader('US','description')
 prediction,Ytest=models.tfidfRegression(documents,viewsLog, 20000)
 print('TFIDF : DESCRIPTION ',eval.evaluate_model(Ytest,prediction,'regression',['mse','mae','r2']))
+prediction,Ytest=models.tfidfRegression(documents,viewsLog, 20000,SVD=True)
+print('TFIDF-SVD : DESCRIPTION ',eval.evaluate_model(Ytest,prediction,'regression',['mse','mae','r2']))
 ##################################################################
 documents=dataPreProcessing.dataLoader('US','title')
 prediction,Ytest=models.tfidfRegression(documents,viewsLog, 20000)
 print('TFIDF : TITLE ',eval.evaluate_model(Ytest,prediction,'regression',['mse','mae','r2']))
+prediction,Ytest=models.tfidfRegression(documents,viewsLog, 20000,SVD=True)
+print('TFIDF-SVD : TITLE ',eval.evaluate_model(Ytest,prediction,'regression',['mse','mae','r2']))
+'''
+documents=dataPreProcessing.dataLoader('US','description').to_list()
+views=dataPreProcessing.dataLoader('US','views').to_list()
+viewsLog=[math.log(i) for i in views]
+model=models.transformer(documents,viewsLog)
