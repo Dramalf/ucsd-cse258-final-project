@@ -48,7 +48,7 @@ def numberDistribution(name:str):
         loc, scale = params
         fig, ax1 = plt.subplots()
         percentile_90 = number[column].quantile(0.9)   
-        sns.histplot(number[number[column]<percentile_90][column], kde=True, bins=500, color='blue', alpha=0.6,lw=2,label='Views (<= 90% percentile)')
+        sns.histplot(number[number[column]<percentile_90][column], kde=True, bins=500, color='blue', alpha=0.6,lw=2,label=column+' (<= 90% percentile)')
         
         ax2 = plt.twinx()
         xmin, xmax = plt.xlim()  
@@ -93,8 +93,10 @@ def wordFrequency(name:str):
         img=wordcloud.to_image()
         img.save('dataAnalyse/'+name+column+'WordCloud.png')
         pd.DataFrame(mostCommon).to_csv('dataAnalyse/'+name+column+'MostCommon1000.csv')
+def dataLoader(name:str,column:str):
+    return loadCleanedData(name)[column]
 if __name__ == "__main__":
-    wordFrequency('US')
-    wordFrequency('CA')
-    wordFrequency('GB')
-    
+   
+    numberDistribution("US")
+    numberDistribution("CA")
+    numberDistribution("GB")
