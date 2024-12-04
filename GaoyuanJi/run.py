@@ -69,7 +69,10 @@ print('TFIDF : TITLE ',eval.evaluate_model(Ytest,prediction,'regression',['mse',
 prediction,Ytest=models.tfidfRegression(documents,viewsLog, 20000,SVD=True)
 print('TFIDF-SVD : TITLE ',eval.evaluate_model(Ytest,prediction,'regression',['mse','mae','r2']))
 '''
-documents=dataPreProcessing.dataLoader('US','description').to_list()
+
+documents=dataPreProcessing.dataLoader('US','tags').to_list()
 views=dataPreProcessing.dataLoader('US','views').to_list()
+
+
 viewsLog=[math.log(i) for i in views]
 model=models.transformer(documents,viewsLog)

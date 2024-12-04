@@ -49,12 +49,14 @@
 \usepackage{graphicx} 
 \usepackage{caption} 
 \usepackage{float}
+\usepackage{amsmath}
+
 %%
 %% \BibTeX command to typeset BibTeX logo in the docs
 \AtBeginDocument{%
   \providecommand\BibTeX{{%
     Bib\TeX}}}
-
+  
 %% Rights management information.  This information is sent to you
 %% when you complete the rights form.  These commands have SAMPLE
 %% values in them; it is your responsibility as an author to replace
@@ -244,8 +246,8 @@ for any ACM publication --- conference or journal, and for any stage
 of publication, from review to final ``camera-ready'' copy, to the
 author's own version, with {\itshape very} few changes to the source.
 
-\section{Date Exploring}
-In general, the dataset focus on daily records of trending viedos on Youtube. It consists of informations of trending viedos in 10 countries (USA, Great Britain, Germany, Canada, France, Russia, Mexico, South Korea, Japan and India). Entries from each country are stored in a CSV file. For each entry, the video title, channel title, publish time, tags, views, likes and dislikes, description, and comment count are recorded, where video title, channel title, tags and description are text and others are digits.
+\section{Data Exploring}
+The "Trending YouTube Video Statistics" is selected as the dataset \cite{daatset}. In general, the dataset focus on daily records of trending viedos on Youtube. It consists of informations of trending viedos in 10 countries (USA, Great Britain, Germany, Canada, France, Russia, Mexico, South Korea, Japan and India). Entries from each country are stored in a CSV file. For each entry, the video title, channel title, publish time, tags, views, likes and dislikes, description, and comment count are recorded, where video title, channel title, tags and description are text and others are digits. Among them, the title, tags, description, views, likes, dislikes and comment count are selected for further tasks.
 
 \subsection{Distributions of numerical data}
 The distributions of all numerical data in the dataset are obtained and those distributions of different countries shares similarity. 
@@ -276,63 +278,86 @@ For each numerical metrics, their distributions are generated and the distributi
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.6\textwidth]{figure/CAviewsDistrbution.png} % 替换 example-image 为图片文件名
+  \includegraphics[width=0.6\textwidth]{figure/CAviewsDistrbution.png} 
   \caption{The distribution of views in Canada. The PDFs generated form KDE and exponential fitting are used. The max 10\% data are ignored.}
-  \label{fig:views} % 标签用于引用
+  \label{fig:views} 
   \end{figure}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{figure/CAlikesDistrbution.png} % 替换 example-image 为图片文件名
+    \includegraphics[width=0.6\textwidth]{figure/CAlikesDistrbution.png} 
     \caption{The distribution of likes in Canada. The PDFs generated form KDE and exponential fitting are used. The max 10\% data are ignored.}
-    \label{fig:likes} % 标签用于引用
+    \label{fig:likes} 
     \end{figure}
     \begin{figure}[H]
       \centering
-      \includegraphics[width=0.6\textwidth]{figure/CAdislikesDistrbution.png} % 替换 example-image 为图片文件名
+      \includegraphics[width=0.6\textwidth]{figure/CAdislikesDistrbution.png} 
       \caption{The distribution of dislikes in Canada. The PDFs generated form KDE and exponential fitting are used. The max 10\% data are ignored.}
-      \label{fig:dislikes} % 标签用于引用
+      \label{fig:dislikes} 
       \end{figure}
       \begin{figure}[H]
         \centering
-        \includegraphics[width=0.6\textwidth]{figure/CAcomment_countDistrbution.png} % 替换 example-image 为图片文件名
+        \includegraphics[width=0.6\textwidth]{figure/CAcomment_countDistrbution.png} 
         \caption{The distribution of comments count in Canada. The PDFs generated form KDE and exponential fitting are used. The max 10\% data are ignored.}
-        \label{fig:comments} % 标签用于引用
+        \label{fig:comments} 
         \end{figure}
 \subsection{Word Frequency}
 
 The frequency of words in the text data provided signification information about the video. After removing the irrelevant informations such as stopping words and urls, the word frequency of title, tags and descriptions are generated as the word clouds.
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.6\textwidth]{figure/CAtitleWordCloud.png} % 替换 example-image 为图片文件名
+  \includegraphics[width=0.6\textwidth]{figure/CAtitleWordCloud.png} 
   \caption{The word cloud of titles in Canada.}
-  \label{fig:title} % 标签用于引用
+  \label{fig:title} 
 \end{figure}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.6\textwidth]{figure/CAtagsWordCloud.png} % 替换 example-image 为图片文件名
+  \includegraphics[width=0.6\textwidth]{figure/CAtagsWordCloud.png}
   \caption{The word cloud of tags in Canada.}
-  \label{fig:tag} % 标签用于引用
+  \label{fig:tag} 
 \end{figure}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.6\textwidth]{figure/CAdescriptionWordCloud.png} % 替换 example-image 为图片文件名
+  \includegraphics[width=0.6\textwidth]{figure/CAdescriptionWordCloud.png} 
   \caption{The word cloud of descriptions in Canada.}
-  \label{fig:description} % 标签用于引用
+  \label{fig:description} 
 \end{figure}
-\section{Method}
+
+\section{Task}
+Since all features selected are expected to share strong releations, each feature can be potentialy predicted by other features. Taking consideration of the real world application, the prediction of views of a viedo is selected as the task. Since views of a viedo can significantly indicate its popularity, the effective prediction can direct the creators while improve the recommendation methods of platforms.
+
+As the prediction target is views, a regression model is expected. Initially, the simple logistic regression models with other numerical features such as likes, dislikes and comment count is selected as baselines. Further, the Term Frequency-Inverse Document Frequency (TF-IDF) approach is expected to perform well with text features, such as titles, tags and descriptions. The MSE, MAE and $R^2$ are selected for evaluation.
+
+All numerical features are converted into log-scale and all text features are preprocessed by removing irrelevant informations.
 
 
 
+\section{Model}
+To predict the views of a viedo, all other metrics in the entry can be considered as features. Since the views, likes, dislikes and comment count share the same distributions, the regression models using likes, dislikes and comment count as inputs are expected to perfomr well. However, the prediction task can not be actually completed with these models since the views data is available if likes, dislikes and comment count are available. And using features to predict an existed data is meaningless.
+
+The title, tags and descriptions of a viedo are available once it is uploaded. Therefore, these informations can be applied as features for prediction. Then the TF-IDF approach can be used, which provides the contribution of a word to text. The word with higher frequency in a sample text and lower frequency in the whole text is assigned with higher weight, and vice versa. The method focus on the releation between each signle word and the sample text. However, the context information is aborted and all words are considered as independent.
+
+Introduced by \cite{NIPS2017_3f5ee243}, the self-attention based approach : Transformer, is proven to perform well in processing texts. It weights the importance of releations among different words, enabling it to extract the context and global information. In general, the model develops the encoder-decoder structure. In the encoder, inputs are converted into tokens, which are the minimum units of information. Then, linear layers are applied to map the input tokens into three matrixes: Query, Key and Value. And the attention weights are generated by the matrixes.
+\[
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+\]
+In the decoder, a prediction head is used to generate the prediction result from the weights.
+
+To apply Transformer in the views prediction task, the features (title, tags and descriptions) are converted into tokens, which are the basic unit of the text. After that, a pre-trained Transformer model with signle head is adopted. In each epoch of training, the model's performance on the validation set is evaulated and early-stopping is adopted to avoid overfitting.
+
+\section{Literature}
+Similar prediction tasks are completed with the dataset, such as likes prediction, Category Prediciton \cite{likespred,categorypred,likepred3ML}. Various approaches such as the random forest, XGBoost and linear regression are applied \cite{likepred3ML}.
+
+Although Transformer based approach archives the best performance, it is limited by huge time and space consumption since each token has interactions with all tokens. Although its self-attention mechanism can obtain the context information, the computation cost increases rapidly as the text seqence increasing. The Receptance-Weighted Key-Value (RWKV) model combines the RNN and self-attention, archives high performance on large scale tasks with acceptable costs.
 \section{Experiments and Results}
-\begin{table}[ht]
+\begin{table}[H]
   \centering
   
-  \caption{Performance Metrics of Eight Models}
+  \caption{Performance Metrics of Models}
   \label{tab:model_metrics}
  
   \begin{tabular}{lccc}
   \toprule
-  \textbf{Model} & \textbf{MSE} & \textbf{MAE} & \textbf{R2} \\
+  \textbf{Model} & \textbf{MSE} & \textbf{MAE} & \textbf{$R^2$} \\
   \midrule
   Single Feature (likes) & 0.77 & 0.63 & 0.74 \\
   Single Feature (comments) & 1.19 & 0.77 & 0.60 \\
@@ -343,12 +368,19 @@ The frequency of words in the text data provided signification information about
   TF-IDF-SVD (description) & 0.55 & 0.39 & 0.82 \\
   TF-IDF (title) & 0.32 & 0.28 & 0.89 \\
   TF-IDF-SVD (title) & 0.44 & 0.38 & 0.85 \\
+  Transformer (tags) & 0.44 & 0.38 & 0.85 \\
+  Transformer (description) & 0.30 & 0.35 & 0.90 \\
   Transformer (title) & \bf{0.18} & \bf{0.27} & 0.93 \\
   \bottomrule
   \end{tabular}%
   
-  \end{table}
+\end{table}
 
+Table \ref{tab:model_metrics} provides the performance of 12 different models. The dataset is likes, comments, dislikes, tags, description and titles in US, with size of 40739. After shuffle, 90\% of the dataset is devided as the training set and 10\% is the validation set. The metrics of MSE, MAE and $R^2$ are used.
+
+The baselines are in three groups: regression models with signle features, TF-IDF models and TF-IDF-SVD models. For TF-IDF models, the max 20000 imprtant words are used. For TF-ID-SVD models, the Singular Value Decomposition approach is introduced for dimension reduction from 20000 to 5000.
+
+As the result, the Transformer model with titles as features archives the best performance: 0.18 in MSE and 0.27 in MAE, proving the effectiveness of Transformer on texts prediction tasks. Furthermore, all models with titles perform better than other text features, indicating that the title of a video contributes more with its views than tags and descriptions.
 
 \section{Title Information}
 
