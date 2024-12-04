@@ -48,24 +48,13 @@
 \tempurl}
 
 
-\bibitem[lik({[n.\,d.]}a)]%
+\bibitem[lik({[n.\,d.]})]%
         {likespred}
- \bibinfo{year}{[n.\,d.]}\natexlab{a}.
+ \bibinfo{year}{[n.\,d.]}\natexlab{}.
 \newblock \bibinfo{booktitle}{\emph{youtube likes prediction}}.
 \newblock
 \urldef\tempurl%
 \url{https://www.kaggle.com/code/hetulmehta/youtube-likes-prediction}
-\showURL{%
-\tempurl}
-
-
-\bibitem[lik({[n.\,d.]}b)]%
-        {likepred3ML}
- \bibinfo{year}{[n.\,d.]}\natexlab{b}.
-\newblock \bibinfo{booktitle}{\emph{YouTube Likes Prediction using 3 ML models}}.
-\newblock
-\urldef\tempurl%
-\url{https://www.kaggle.com/code/sanketsonu/youtube-likes-prediction-using-3-ml-models}
 \showURL{%
 \tempurl}
 
@@ -77,6 +66,19 @@
 \newblock
 \urldef\tempurl%
 \url{https://www.kaggle.com/code/emirfarukerman/98-accuracy-youtube-videos-category-prediciton}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Peng et~al\mbox{.}(2023)]%
+        {peng2023rwkvreinventingrnnstransformer}
+\bibfield{author}{\bibinfo{person}{Bo Peng}, \bibinfo{person}{Eric Alcaide}, \bibinfo{person}{Quentin Anthony}, \bibinfo{person}{Alon Albalak}, \bibinfo{person}{Samuel Arcadinho}, \bibinfo{person}{Stella Biderman}, \bibinfo{person}{Huanqi Cao}, \bibinfo{person}{Xin Cheng}, \bibinfo{person}{Michael Chung}, \bibinfo{person}{Matteo Grella}, \bibinfo{person}{Kranthi~Kiran GV}, \bibinfo{person}{Xuzheng He}, \bibinfo{person}{Haowen Hou}, \bibinfo{person}{Jiaju Lin}, \bibinfo{person}{Przemyslaw Kazienko}, \bibinfo{person}{Jan Kocon}, \bibinfo{person}{Jiaming Kong}, \bibinfo{person}{Bartlomiej Koptyra}, \bibinfo{person}{Hayden Lau}, \bibinfo{person}{Krishna Sri~Ipsit Mantri}, \bibinfo{person}{Ferdinand Mom}, \bibinfo{person}{Atsushi Saito}, \bibinfo{person}{Guangyu Song}, \bibinfo{person}{Xiangru Tang}, \bibinfo{person}{Bolun Wang}, \bibinfo{person}{Johan~S. Wind}, \bibinfo{person}{Stanislaw Wozniak}, \bibinfo{person}{Ruichong Zhang}, \bibinfo{person}{Zhenyuan Zhang}, \bibinfo{person}{Qihang Zhao}, \bibinfo{person}{Peng Zhou}, \bibinfo{person}{Qinghua Zhou}, \bibinfo{person}{Jian Zhu}, {and} \bibinfo{person}{Rui-Jie Zhu}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \bibinfo{title}{RWKV: Reinventing RNNs for the Transformer Era}.
+\newblock
+\newblock
+\showeprint[arxiv]{2305.13048}~[cs.CL]
+\urldef\tempurl%
+\url{https://arxiv.org/abs/2305.13048}
 \showURL{%
 \tempurl}
 
